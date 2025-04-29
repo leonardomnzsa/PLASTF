@@ -481,11 +481,11 @@ if df_informativos_exploded is not None:
                 st.markdown(julgado_assertiva['tese_julgamento'])
                 st.divider()
                 # --- Integração API GPT-4 para Assertivas ---
-                if st.button("Gerar 5 Assertivas com IA (GPT-4)", key=f"gen_assert_{st.session_state.selected_julgado_id_assertiva}"):
+                if st.button("Gerar 5 Assertivas com a Result", key=f"gen_assert_{st.session_state.selected_julgado_id_assertiva}"):
                     if not openai_api_key: # Check if key is loaded from secrets
                         st.error("Chave da API OpenAI não configurada. Configure-a nos segredos do Streamlit (st.secrets) para usar esta funcionalidade.")
                     else:
-                        st.info("Gerando assertivas com a API OpenAI (GPT-4)... Por favor, aguarde.")
+                        st.info("Gerando assertivas com a Result... Por favor, aguarde.")
                         try:
                             prompt = f"""
                             Com base na seguinte tese/notícia de julgado do Supremo Tribunal Federal (STF), gere exatamente 5 (cinco) assertivas distintas e relevantes no formato 'Certo/Errado' para fins de estudo para concursos públicos. Para cada assertiva, indique claramente o gabarito ('Certo' ou 'Errado') e uma breve justificativa concisa (máximo 1-2 frases) baseada **exclusivamente** no texto fornecido.
@@ -516,7 +516,7 @@ if df_informativos_exploded is not None:
                                **Justificativa:** [Breve justificativa 5]
                             """
 
-                            response = openai.chat.completions.create(
+                            response = openai.ChatCompletion.create(
                                 model="gpt-4", # Use GPT-4 as requested
                                 messages=[{{"role": "user", "content": prompt}}],
                                 temperature=0.5 # Slightly creative but mostly factual
@@ -544,12 +544,12 @@ if df_informativos_exploded is not None:
         st.header("Perguntas sobre os Julgados")
         st.info("Faça uma pergunta sobre os julgados atualmente filtrados/buscados na aba '🔍 Informativos'.")
         user_question = st.text_input("Sua pergunta:", key="user_q")
-        if st.button("Buscar Resposta com IA (GPT-4)", key="ask_q"):
+        if st.button("Buscar Resposta com a Result", key="ask_q"):
             if user_question:
                 if not openai_api_key:
                     st.error("Chave da API OpenAI não configurada. Configure-a nos segredos do Streamlit (st.secrets) para usar esta funcionalidade.")
                 else:
-                    st.info("Buscando resposta com a API OpenAI (GPT-4)... Por favor, aguarde.")
+                    st.info("Buscando resposta com a Result... Por favor, aguarde.")
                     try:
                         # Preparar contexto (ex: 5 primeiras teses únicas filtradas)
                         # Using drop_duplicates on ID before head to avoid sending near-identical context due to ramo explosion
