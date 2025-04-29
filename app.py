@@ -364,9 +364,9 @@ if df_informativos_exploded is not None:
                                 [Pergunta clara sobre a aplicação do julgado STF ao caso]
                                 """
 
-                                response = openai.chat.completions.create(
+                                response = openai.ChatCompletion.create(
                                     model="gpt-4",
-                                    messages=[{{"role": "user", "content": prompt}}],
+                                    messages=[{"role": "user", "content": prompt}],
                                     temperature=0.7 # More creative for case studies
                                 )
                                 st.session_state[session_key_caso] = response.choices[0].message.content
@@ -518,7 +518,7 @@ if df_informativos_exploded is not None:
 
                             response = openai.ChatCompletion.create(
                                 model="gpt-4", # Use GPT-4 as requested
-                                messages=[{{"role": "user", "content": prompt}}],
+                                messages=[{"role": "user", "content": prompt}],
                                 temperature=0.5 # Slightly creative but mostly factual
                             )
 
@@ -576,9 +576,9 @@ if df_informativos_exploded is not None:
                         4. Não invente informações nem faça suposições.
                         """
 
-                        response = openai.chat.completions.create(
+                        response = openai.ChatCompletion.create(
                             model="gpt-4",
-                            messages=[{{"role": "user", "content": prompt}}],
+                            messages=[{"role": "user", "content": prompt}],
                             temperature=0.2 # Low temperature for factual answers based on context
                         )
                         resposta_texto = response.choices[0].message.content
